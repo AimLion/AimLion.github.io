@@ -1,0 +1,362 @@
+<!-- 
+    ================================================================================
+    TÍTULO DEL PROYECTO: Portafolio Personal - Estilo Retro Arcade / 16-Bits
+    ================================================================================
+    
+    DESCRIPCIÓN DE DISEÑO (DESIGN DOC):
+    Este portafolio emula la interfaz de un videojuego de consola de los 90s (SNES/Genesis)
+    o una máquina Arcade. 
+
+    ESTRUCTURA VISUAL:
+    1. Tema Oscuro: Fondo #1a1a1a para simular pantalla apagada o cuarto oscuro.
+    2. Tipografía: 'Press Start 2P' para textos pixelados auténticos.
+    3. Efectos CRT: Una capa superpuesta (.scanlines) simula las líneas de barrido de monitor viejo.
+    4. UI de Juego de Pelea:
+       - Header: Simula la barra de puntuación (1UP, HIGH SCORE, CREDITOS).
+       - Skills: Se visualizan como "Barras de Salud/Vida" que se llenan al cargar.
+       - Proyectos: Se presentan como "Selección de Escenario" (Stage Select).
+    
+    DEPENDENCIAS:
+    - Tailwind CSS (v3.x via CDN): Para estructura, espaciado y colores base.
+    - Google Fonts: Fuente 'Press Start 2P'.
+    
+    GUÍA DE EDICIÓN PARA AGENTES/DESARROLLADORES:
+    - Los colores principales son semánticos: 
+      * Rojo (#ef4444) para P1/Ataque.
+      * Azul (#3b82f6) para P2/Defensa.
+      * Amarillo (#eab308) para UI General/Barras de Vida.
+    - Para cambiar imágenes, buscar las etiquetas <img> dentro de los contenedores con bordes.
+    - Los bordes no usan 'border-radius', usan 'box-shadow' para el efecto pixelado duro.
+    ================================================================================
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player 1: Ing. Software - Portafolio</title>
+    
+    <!-- CARGA DE DEPENDENCIAS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ESTILOS CORE Y EFECTOS RETRO --- */
+        
+        body {
+            background-color: #1a1a1a; /* Gris muy oscuro, mejor que negro puro para lectura */
+            color: #f0f0f0;
+            font-family: 'Press Start 2P', cursive; /* Fuente global */
+            overflow-x: hidden; /* Evita scroll horizontal por efectos */
+        }
+
+        /* EFECTO SCANLINES (CRT)
+           Crea líneas horizontales semitransparentes sobre toda la pantalla
+           para imitar monitores de tubo.
+        */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px; /* Grosor de la línea */
+            pointer-events: none; /* Permite hacer click a través de la capa */
+            z-index: 999; /* Siempre encima */
+        }
+
+        /* BORDES PIXELADOS (NES STYLE)
+           En lugar de bordes normales, usamos sombras sólidas para crear
+           esquinas cuadradas sin suavizado (aliasing), típico de pixel art.
+        */
+        .pixel-border {
+            box-shadow: 
+                -4px 0 0 0 white, 
+                4px 0 0 0 white, 
+                0 -4px 0 0 white, 
+                0 4px 0 0 white;
+            margin: 4px; /* Espacio para que la sombra no se corte */
+        }
+        
+        /* Variantes de color para los bordes */
+        .pixel-border-red {
+            box-shadow: -4px 0 0 0 #ef4444, 4px 0 0 0 #ef4444, 0 -4px 0 0 #ef4444, 0 4px 0 0 #ef4444;
+        }
+        .pixel-border-blue {
+            box-shadow: -4px 0 0 0 #3b82f6, 4px 0 0 0 #3b82f6, 0 -4px 0 0 #3b82f6, 0 4px 0 0 #3b82f6;
+        }
+
+        /* Animación clásica de "Insert Coin" */
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        /* BARRAS DE VIDA (SKILLS)
+           Contenedor y relleno para simular la vida en juegos de pelea.
+        */
+        .health-bar-container {
+            background-color: #374151;
+            border: 2px solid white; /* Borde simple interno */
+            height: 20px;
+            position: relative;
+        }
+        .health-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #eab308, #ef4444); /* Gradiente Amarillo -> Rojo (Daño) */
+            width: 0%; /* Inicia vacío para la animación JS */
+            transition: width 1.5s ease-out; /* Animación suave al cargar */
+        }
+
+        /* Botones con interacción física simple */
+        .btn-retro {
+            transition: transform 0.1s;
+            cursor: pointer;
+        }
+        .btn-retro:active {
+            transform: translateY(4px); /* Simula presionar botón físico */
+        }
+        .btn-retro:hover {
+            background-color: #fff; /* Inversión de color al hover */
+            color: #000;
+        }
+
+        /* Sombra de texto neón para títulos principales */
+        .text-neon {
+            text-shadow: 3px 3px #ff00de; /* Sombra Magenta/Cyan retro */
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+
+    <!-- CAPA VISUAL: SCANLINES -->
+    <div class="scanlines"></div>
+
+    <!-- 
+        SECCIÓN 1: HEADER / SCOREBOARD 
+        Simula la parte superior de la pantalla de arcade.
+        Contiene: Nombre del jugador, Creditos parpadeantes, High Score.
+    -->
+    <header class="p-6 flex justify-between items-center bg-gray-900 border-b-4 border-white sticky top-0 z-50">
+        <div>
+            <span class="text-yellow-400">1UP</span>
+            <div class="mt-2 text-xl md:text-2xl">MANUEL JASSO</div>
+        </div>
+        
+        <!-- Elemento decorativo central "Insert Coin" -->
+        <div class="text-center hidden md:block">
+            <div class="text-red-500 blink">INSERT COIN</div>
+            <div class="text-xs text-gray-400 mt-1">CREDITS: 24</div>
+        </div>
+        
+        <div class="text-right">
+            <span class="text-blue-400">HIGH SCORE</span>
+            <div class="mt-2 text-xl md:text-2xl">022002</div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 max-w-5xl">
+        
+        <!-- 
+            SECCIÓN 2: HERO / SELECCIÓN DE PERSONAJE
+            Presentación principal del perfil profesional.
+        -->
+        <section class="flex flex-col md:flex-row gap-12 items-center mb-24">
+            <!-- Avatar Frame -->
+            <div class="w-64 h-64 bg-gray-800 pixel-border relative flex items-center justify-center shrink-0">
+                <img src="./perfil.jpg" alt="Avatar" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-2 left-2 bg-red-600 px-2 py-1 text-xs text-white">P1</div>
+            </div>
+
+            <!-- Texto de Introducción -->
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-2xl md:text-4xl mb-6 text-neon leading-relaxed">
+                    SOFTWARE ENGINEER <br>
+                    <span class="text-white text-lg md:text-2xl">& GAME DEVELOPER</span>
+                </h1>
+                
+                <!-- Bloque de texto estilo consola/terminal -->
+                <p class="text-gray-400 text-xs md:text-sm leading-8 mb-8 font-sans" style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">
+                    >> SELECT PLAYER_CLASS: FRONTEND DEV<br>
+                    >> LOADING MASTER IN MULTIMEDIA DESIGN...<br>
+                    >> SPECIAL SKILL: DART & PYTHON<br>
+                    >> READY TO CODE.
+                </p>
+                
+                <!-- Botones de Acción -->
+                <div class="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="pixel-border bg-blue-600 text-white px-6 py-4 text-xs btn-retro">
+                        START GAME (PROJECTS)
+                    </a>
+                    <a href="https://github.com/AimLion" target="_blank" class="pixel-border bg-gray-700 text-white px-6 py-4 text-xs btn-retro">
+                        GITHUB
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            SECCIÓN 3: STATS / SKILLS 
+            Visualización de habilidades técnicas usando barras de vida.
+            'data-width' controla qué tan llena está la barra (0-100%).
+        -->
+        <section class="mb-24">
+            <h2 class="text-2xl mb-12 text-yellow-400 border-b-4 border-yellow-400 inline-block pb-4 pr-12">
+                PLAYER STATS
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Skill: Python -->
+                <div>
+                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
+                        <span>PYTHON</span>
+                        <span>NVL 80</span>
+                    </div>
+                    <div class="health-bar-container">
+                        <!-- Ajustar data-width para cambiar el nivel -->
+                        <div class="health-bar-fill" style="width: 0%" data-width="80%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill: Game Dev -->
+                <div>
+                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
+                        <span>GAME DEV (UNITY)</span>
+                        <span>NVL 75</span>
+                    </div>
+                    <div class="health-bar-container">
+                        <div class="health-bar-fill" style="width: 0%" data-width="75%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill: Design UI/UX -->
+                <div>
+                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
+                        <span>DESIGN UI/UX</span>
+                        <span>NVL 85</span>
+                    </div>
+                    <div class="health-bar-container">
+                        <div class="health-bar-fill" style="width: 0%" data-width="85%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill: Tools -->
+                <div>
+                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
+                        <span>GIT / SQL</span>
+                        <span>NVL 90</span>
+                    </div>
+                    <div class="health-bar-container">
+                        <div class="health-bar-fill" style="width: 0%" data-width="90%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            SECCIÓN 4: STAGE SELECT (PROYECTOS) 
+            Cards para mostrar los trabajos. Usan bordes de colores distintos 
+            (Rojo y Azul) para diferenciar tipos de proyecto.
+        -->
+        <section id="projects" class="mb-24">
+            <h2 class="text-2xl mb-12 text-green-400 border-b-4 border-green-400 inline-block pb-4 pr-12">
+                STAGE SELECT
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- PROYECTO 1 (Estilo Rojo/Agresivo) -->
+                <article class="bg-gray-800 pixel-border-red p-6 relative group transform transition hover:-translate-y-2">
+                    <div class="absolute -top-4 -right-4 bg-red-600 text-white text-[10px] px-3 py-2 transform rotate-12 pixel-border shadow-lg">
+                        INDIE GAME
+                    </div>
+    
+                    <div class="bg-black h-56 mb-6 flex items-center justify-center border-4 border-gray-700 overflow-hidden relative">
+                        <img src="./screenProy1.png" alt="Gameplay de Cyberpunk Snake" class="w-full h-full object-cover object-center">
+                    </div>
+
+                    <h3 class="text-lg text-red-400 mb-4">CYBERPUNK SNAKE</h3>
+                    <p class="text-[10px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-red-900 pl-4">
+                        Versión moderna del clásico de Snake con temática cyberpunk y estética neón, con una nueva fruta en juego.
+                    </p>
+
+                    <div class="flex gap-3">
+                        <!-- <a href="#" class="pixel-border bg-red-600 text-white px-2 py-3 text-[10px] hover:bg-red-500 btn-retro w-full text-center">
+                            PLAY DEMO
+                        </a> -->
+                        <a href="https://github.com/AimLion/CyberpunkSnake" target="_blank" rel="noopener noreferrer" class="pixel-border bg-gray-700 text-white px-2 py-3 text-[10px] hover:bg-gray-600 btn-retro w-full text-center">
+                            VER REPO
+                        </a>
+                    </div>
+                </article>
+
+                <!-- PROYECTO 2 (Estilo Azul/Tecnológico)-->
+                <article class="bg-gray-800 pixel-border-blue p-6 relative group transform transition hover:-translate-y-2">
+                     <div class="absolute -top-4 -right-4 bg-blue-600 text-white text-[10px] px-3 py-2 transform -rotate-6 pixel-border shadow-lg">
+                        MOBILE APP
+                    </div>
+
+                    <div class="bg-black h-56 mb-6 flex items-center justify-center border-4 border-gray-700 overflow-hidden">
+                        <img src="./screenProy2.png" alt="Interfaz de la app Pokedex X" class="w-full h-full object-cover object-center">
+                    </div>
+
+                    <h3 class="text-lg text-blue-400 mb-4">POKEDEX X</h3>
+                    <p class="text-[10px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-blue-900 pl-4">
+                        Navegador de información sobre Pokemon desarrollado con Flutter, funcionando como una Pokedex moderna e interactiva.
+                    </p>
+
+                    <div class="flex gap-3">
+                        <a href="https://github.com/AimLion/pokedex-x" class="pixel-border bg-blue-600 text-white px-2 py-3 text-[10px] hover:bg-blue-500 btn-retro w-full text-center">
+                            VER REPO
+                        </a>
+                        <!-- <a href="#" class="pixel-border bg-gray-700 text-white px-2 py-3 text-[10px] hover:bg-gray-600 btn-retro w-full text-center">
+                            DOCS TÉCNICOS
+                        </a> -->
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-12 border-t-4 border-gray-800 mt-12">
+            <p class="text-[10px] text-gray-500 mb-6">© 2026 MANUEL JASSO - ALL RIGHTS RESERVED</p>
+            <div class="flex justify-center gap-8 text-sm">
+                <a href="https://www.linkedin.com/in/manuel-2do/" class="text-gray-400 hover:text-white hover:underline decoration-wavy decoration-red-500 underline-offset-4 transition-all">LINKEDIN</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maximus.jasso@gmail.com" class="text-gray-400 hover:text-white hover:underline decoration-wavy decoration-blue-500 underline-offset-4 transition-all">EMAIL</a>
+            </div>
+            <p class="mt-10 text-[8px] text-gray-700 animate-pulse">PRESS START TO CONTINUE</p>
+        </footer>
+
+    </main>
+
+    <!-- 
+        LOGICA JS: ANIMACIÓN DE BARRAS 
+        Pequeño script para que las barras de "vida" se llenen al cargar la página.
+    -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.health-bar-fill');
+            
+            // Timeout para simular carga de juego
+            setTimeout(() => {
+                bars.forEach(bar => {
+                    // Lee el atributo data-width y lo aplica al estilo width
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
