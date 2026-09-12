@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player 1: Ing. Software - Portafolio</title>
+    <title>Player 1 - Portfolio</title>
     
     <!-- CARGA DE DEPENDENCIAS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -118,7 +118,7 @@
     <header class="p-6 flex justify-between items-center bg-gray-900 border-b-4 border-white sticky top-0 z-50">
         <div>
             <span class="text-yellow-400">1UP</span>
-            <div class="mt-2 text-xl md:text-2xl">MANUEL JASSO</div>
+            <div class="mt-2 text-xl md:text-2xl">MANUEL SEGUNDO</div>
         </div>
         
         <!-- Elemento decorativo central "Insert Coin" -->
@@ -150,15 +150,15 @@
             <div class="flex-1 text-center md:text-left">
                 <h1 class="text-2xl md:text-4xl mb-6 text-neon leading-relaxed">
                     SOFTWARE ENGINEER <br>
-                    <span class="text-white text-lg md:text-2xl">& GAME DEVELOPER</span>
+                    <span class="text-white text-lg md:text-2xl">& GAME DESIGNER</span>
                 </h1>
                 
                 <!-- Bloque de texto estilo consola/terminal -->
                 <p class="text-gray-400 text-xs md:text-sm leading-8 mb-8 font-sans" style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">
-                    >> SELECT PLAYER_CLASS: FRONTEND DEV<br>
-                    >> LOADING MASTER IN MULTIMEDIA DESIGN...<br>
-                    >> SPECIAL SKILL: DART & PYTHON<br>
-                    >> READY TO CODE.
+                    >> SELECT PLAYER_CLASS: TECHNICAL GAME DESIGNER<br>
+                    >> LOADING MASTER IN MULTIMEDIA DESIGN. . .<br>
+                    >> SPECIAL SKILL: SYSTEMS DESIGN & PYTHON<br>
+                    >> READY TO FAIL FAST TO FIND THE FUN.
                 </p>
                 
                 <!-- Botones de Acción -->
@@ -174,58 +174,71 @@
         </section>
 
         <!-- 
-            SECCIÓN 3: STATS / SKILLS 
-            Visualización de habilidades técnicas usando barras de vida.
-            'data-width' controla qué tan llena está la barra (0-100%).
+            SECCIÓN 3: TECH INVENTORY
         -->
         <section class="mb-24">
             <h2 class="text-2xl mb-12 text-yellow-400 border-b-4 border-yellow-400 inline-block pb-4 pr-12">
-                PLAYER STATS
+                TECH INVENTORY
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Skill: Python -->
-                <div>
-                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
-                        <span>PYTHON</span>
-                        <span>NVL 80</span>
-                    </div>
-                    <div class="health-bar-container">
-                        <!-- Ajustar data-width para cambiar el nivel -->
-                        <div class="health-bar-fill" style="width: 0%" data-width="80%"></div>
-                    </div>
-                </div>
+            <div class="bg-[#111] border-[12px] border-zinc-700 p-4 shadow-2xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none"></div>
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-zinc-800 border-4 border-zinc-600 rounded-t-lg"></div>
 
-                <!-- Skill: Game Dev -->
-                <div>
-                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
-                        <span>GAME DEV (UNITY)</span>
-                        <span>NVL 75</span>
+                <div class="grid grid-cols-4 md:grid-cols-6 gap-1 p-1 font-sans text-xs font-bold auto-rows-[4rem] relative z-10">
+                    
+                    <!-- THE MAIN WEAPON: Python & Core Logic (3x2) -->
+                    <div class="col-span-4 md:col-span-3 row-span-2 bg-blue-900/40 border border-blue-500/60 hover:bg-blue-800/60 hover:border-blue-400 transition-colors cursor-crosshair flex flex-col items-center justify-center relative group backdrop-blur-sm">
+                        <div class="absolute top-1 left-2 text-blue-300/50 text-[10px]">3x2 BLOCKS</div>
+                        <span class="text-white tracking-widest text-lg drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">PYTHON & CORE LOGIC</span>
+                        <div class="absolute bottom-2 right-2 text-blue-400 text-[10px] animate-pulse group-hover:block hidden">EQUIPPED</div>
                     </div>
-                    <div class="health-bar-container">
-                        <div class="health-bar-fill" style="width: 0%" data-width="75%"></div>
-                    </div>
-                </div>
 
-                <!-- Skill: Design UI/UX -->
-                <div>
-                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
-                        <span>DESIGN UI/UX</span>
-                        <span>NVL 85</span>
+                    <!-- GAME DESIGN & GDD (2x1) -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 bg-red-900/40 border border-red-500/60 hover:bg-red-800/60 hover:border-red-400 transition-colors cursor-crosshair flex flex-col items-center justify-center relative backdrop-blur-sm">
+                        <div class="absolute top-1 left-2 text-red-300/50 text-[10px]">2x1</div>
+                        <span class="text-white tracking-widest text-[10px] text-center drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">GAME DESIGN<br>& GDD</span>
                     </div>
-                    <div class="health-bar-container">
-                        <div class="health-bar-fill" style="width: 0%" data-width="85%"></div>
-                    </div>
-                </div>
 
-                <!-- Skill: Tools -->
-                <div>
-                    <div class="flex justify-between mb-2 text-xs text-yellow-200">
-                        <span>GIT / SQL</span>
-                        <span>NVL 90</span>
+                    <!-- SQL / DBs (1x1) -->
+                    <div class="col-span-2 md:col-span-1 row-span-1 bg-yellow-900/30 border border-yellow-500/50 hover:bg-yellow-800/50 hover:border-yellow-400 transition-colors cursor-crosshair flex flex-col items-center justify-center relative backdrop-blur-sm">
+                        <div class="absolute top-1 left-1 text-yellow-300/50 text-[8px]">1x1</div>
+                        <span class="text-white tracking-widest text-[8px] text-center drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">SQL / DBs</span>
                     </div>
-                    <div class="health-bar-container">
-                        <div class="health-bar-fill" style="width: 0%" data-width="90%"></div>
+
+                    <!-- C# / GDSCRIPT (1x2) -->
+                    <div class="col-span-2 md:col-span-1 row-span-2 bg-emerald-900/40 border border-emerald-500/60 hover:bg-emerald-800/60 hover:border-emerald-400 transition-colors cursor-crosshair flex flex-col items-center justify-center relative backdrop-blur-sm">
+                        <div class="absolute top-1 left-1 text-emerald-300/50 text-[8px]">1x2</div>
+                        <span class="text-white tracking-widest text-[10px] text-center drop-shadow-[0_2px_2px_rgba(0,0,0,1)] flex flex-col gap-1"><span>C#</span><span>&</span><span>GDSCRIPT</span></span>
+                    </div>
+
+                    <!-- PLAYTEST / FEEDBACK (2x1) -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 bg-zinc-700/50 border border-zinc-400/50 hover:bg-zinc-600/50 hover:border-white transition-colors cursor-crosshair flex flex-col items-center justify-center relative backdrop-blur-sm">
+                        <div class="absolute top-1 left-2 text-zinc-300/50 text-[10px]">2x1</div>
+                        <span class="text-white tracking-widest text-[10px] drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">PLAYTEST / FEEDBACK</span>
+                    </div>
+
+                    <!-- EMPTY SLOTS / EMOJIS -->
+                    <!-- Slot: Cinta de Guardado (2x1) -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 border border-zinc-700/50 bg-black/40 flex items-center justify-center text-xl grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer relative" title="Save File">
+                        <div class="absolute top-1 left-1 text-zinc-600 text-[8px]">2x1</div>
+                        📼
+                    </div>
+                    
+                    <!-- Slot: Hierba Verde (1x1) -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 border border-zinc-700/50 bg-black/40 flex items-center justify-center text-xl grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer relative" title="Green Herb">
+                        🌿
+                    </div>
+
+                    <!-- Slot: UI/UX (1x1) -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 bg-indigo-900/30 border border-indigo-500/50 hover:bg-indigo-800/50 hover:border-indigo-400 transition-colors cursor-crosshair flex flex-col items-center justify-center relative backdrop-blur-sm">
+                        <div class="absolute top-1 left-1 text-indigo-300/50 text-[8px]">1x1</div>
+                        <span class="text-white tracking-widest text-[8px] text-center drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">UI / UX</span>
+                    </div>
+
+                    <!-- Slot: Llave (1x1) -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 border border-zinc-700/50 bg-black/40 flex items-center justify-center text-xl grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer relative" title="Master Key">
+                        🗝️
                     </div>
                 </div>
             </div>
@@ -233,8 +246,6 @@
 
         <!-- 
             SECCIÓN 4: STAGE SELECT (PROYECTOS) 
-            Cards para mostrar los trabajos. Usan bordes de colores distintos 
-            (Rojo y Azul) para diferenciar tipos de proyecto.
         -->
         <section id="projects" class="mb-24">
             <h2 class="text-2xl mb-12 text-green-400 border-b-4 border-green-400 inline-block pb-4 pr-12">
@@ -243,88 +254,89 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 
-                <!-- PROYECTO 1 (Estilo Rojo/Agresivo) -->
+                <!-- PROYECTO 1: Turn-Based Asymmetric Combat -->
                 <article class="bg-gray-800 pixel-border-red p-6 relative group transform transition hover:-translate-y-2">
                     <div class="absolute -top-4 -right-4 bg-red-600 text-white text-[10px] px-3 py-2 transform rotate-12 pixel-border shadow-lg">
-                        INDIE GAME
-                    </div>
-    
-                    <div class="bg-black h-56 mb-6 flex items-center justify-center border-4 border-gray-700 overflow-hidden relative">
-                        <img src="./screenProy1.png" alt="Gameplay de Cyberpunk Snake" class="w-full h-full object-cover object-center">
+                        ENGINEERING / OOP
                     </div>
 
-                    <h3 class="text-lg text-red-400 mb-4">CYBERPUNK SNAKE</h3>
-                    <p class="text-[10px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-red-900 pl-4">
-                        Versión moderna del clásico de Snake con temática cyberpunk y estética neón, con una nueva fruta en juego.
+                    <!-- SPLIT SCREEN SIMULATION -->
+                    <div class="bg-black h-56 mb-6 flex border-4 border-gray-700 overflow-hidden relative">
+                        <!-- Gameplay -->
+                        <div class="w-1/2 h-full border-r-2 border-green-500 flex items-center justify-center bg-zinc-900 text-[10px] text-gray-500 text-center p-2">
+                            [INSERT GAMEPLAY VIDEO HERE]
+                        </div>
+                        <!-- Debugging/Inspector -->
+                        <div class="w-1/2 h-full border-l-2 border-green-500 flex items-center justify-center bg-gray-950 text-[10px] text-green-400 font-sans p-2">
+                            [INSERT GODOT INSPECTOR/DEBUG LOGS]
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg text-red-400 mb-4">ASYMMETRIC COMBAT (GODOT)</h3>
+                    <div class="inline-block bg-zinc-800 border border-zinc-600 text-zinc-300 text-[10px] px-2 py-1 mb-3 font-sans">
+                        STATUS: MVP COMPLETED
+                    </div>
+                    <p class="text-[12px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-red-900 pl-4">
+                        <strong class="text-white">Premise:</strong> A tactical card game where the player and CPU compete by deploying units and managing power across the board to control territory.
                     </p>
-
-                    <div class="flex gap-3">
-                        <!-- <a href="#" class="pixel-border bg-red-600 text-white px-2 py-3 text-[10px] hover:bg-red-500 btn-retro w-full text-center">
-                            PLAY DEMO
-                        </a> -->
-                        <a href="https://github.com/AimLion/CyberpunkSnake" target="_blank" rel="noopener noreferrer" class="pixel-border bg-gray-700 text-white px-2 py-3 text-[10px] hover:bg-gray-600 btn-retro w-full text-center">
-                            VER REPO
-                        </a>
-                    </div>
                 </article>
 
-                <!-- PROYECTO 2 (Estilo Azul/Tecnológico)-->
+                <!-- PROYECTO 2: Economy Simulator -->
                 <article class="bg-gray-800 pixel-border-blue p-6 relative group transform transition hover:-translate-y-2">
-                     <div class="absolute -top-4 -right-4 bg-blue-600 text-white text-[10px] px-3 py-2 transform -rotate-6 pixel-border shadow-lg">
-                        MOBILE APP
+                    <div class="absolute -top-4 -right-4 bg-blue-600 text-white text-[10px] px-3 py-2 transform -rotate-6 pixel-border shadow-lg">
+                        SYSTEMS DESIGN
                     </div>
 
-                    <div class="bg-black h-56 mb-6 flex items-center justify-center border-4 border-gray-700 overflow-hidden">
-                        <img src="./screenProy2.png" alt="Interfaz de la app Pokedex X" class="w-full h-full object-cover object-center">
+                    <div class="bg-black h-56 mb-2 flex items-center justify-center border-4 border-gray-700 overflow-hidden relative p-2">
+                        <div class="w-full h-full flex items-center justify-center bg-slate-900 text-[10px] text-blue-300 text-center">
+                            [INSERT EXCEL GRAPH/A-B TESTING DATA HERE]
+                        </div>
                     </div>
 
-                    <h3 class="text-lg text-blue-400 mb-4">POKEDEX X</h3>
-                    <p class="text-[10px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-blue-900 pl-4">
-                        Navegador de información sobre Pokemon desarrollado con Flutter, funcionando como una Pokedex moderna e interactiva.
+                    <h3 class="text-lg text-blue-400 mb-4">ECONOMY SIMULATOR</h3>
+                    <div class="inline-block bg-zinc-800 border border-zinc-600 text-zinc-300 text-[10px] px-2 py-1 mb-3 font-sans">
+                        STATUS: PRE-PRODUCTION & GDD
+                    </div>
+                    <p class="text-[12px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-blue-900 pl-4">
+                        <strong class="text-white">Premise:</strong> A time-management and economy simulator where players balance rapid service execution with long-term business survival and resource constraints.
                     </p>
-
-                    <div class="flex gap-3">
-                        <a href="https://github.com/AimLion/pokedex-x" class="pixel-border bg-blue-600 text-white px-2 py-3 text-[10px] hover:bg-blue-500 btn-retro w-full text-center">
-                            VER REPO
-                        </a>
-                        <!-- <a href="#" class="pixel-border bg-gray-700 text-white px-2 py-3 text-[10px] hover:bg-gray-600 btn-retro w-full text-center">
-                            DOCS TÉCNICOS
-                        </a> -->
-                    </div>
                 </article>
+
+                <!-- PROYECTO 3: "PASARRATO" (Python Terminal) -->
+                <article class="bg-gray-800 pixel-border col-span-1 lg:col-span-2 p-6 relative group transform transition hover:-translate-y-2">
+                    <div class="absolute -top-4 -right-4 bg-white text-black text-[10px] px-3 py-2 transform rotate-3 pixel-border shadow-lg">
+                    DATA STRUCTURES
+                </div>
+
+                <!-- TERMINAL CLI SIMULATION -->
+                <div class="bg-black h-48 mb-6 flex items-start justify-start border-4 border-gray-700 overflow-hidden p-4">
+                        <div class="font-sans font-bold text-green-500 text-[12px]">
+                            C:\> python pasarrato.py <br>
+                            > INITIALIZING COMBAT SYSTEM...<br>
+                            > LOADING LIFO/FIFO STACKS...<br>
+                            > [INSERT TERMINAL GAMEPLAY SCREENSHOT]
+                        </div>
+                </div>
+
+                <h3 class="text-lg text-white mb-4">"PASARRATO" TERMINAL ENGINE</h3>
+                <p class="text-[12px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-gray-500 pl-4 max-w-3xl">
+                    <strong class="text-white">Premise:</strong> A turn-based automated combat RPG running entirely within the command-line interface, focusing on economy management and class-based skill progression.
+                </p>
+            </article>
 
             </div>
         </section>
 
         <!-- FOOTER -->
         <footer class="text-center py-12 border-t-4 border-gray-800 mt-12">
-            <p class="text-[10px] text-gray-500 mb-6">© 2026 MANUEL JASSO - ALL RIGHTS RESERVED</p>
+            <p class="text-[12px] text-gray-500 mb-6">© 2026 MANUEL JASSO - ALL RIGHTS RESERVED</p>
             <div class="flex justify-center gap-8 text-sm">
                 <a href="https://www.linkedin.com/in/manuel-2do/" class="text-gray-400 hover:text-white hover:underline decoration-wavy decoration-red-500 underline-offset-4 transition-all">LINKEDIN</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maximus.jasso@gmail.com" class="text-gray-400 hover:text-white hover:underline decoration-wavy decoration-blue-500 underline-offset-4 transition-all">EMAIL</a>
             </div>
-            <p class="mt-10 text-[8px] text-gray-700 animate-pulse">PRESS START TO CONTINUE</p>
+            <p class="mt-10 text-[12px] text-gray-700 animate-pulse">PRESS START TO CONTINUE</p>
         </footer>
 
     </main>
-
-    <!-- 
-        LOGICA JS: ANIMACIÓN DE BARRAS 
-        Pequeño script para que las barras de "vida" se llenen al cargar la página.
-    -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const bars = document.querySelectorAll('.health-bar-fill');
-            
-            // Timeout para simular carga de juego
-            setTimeout(() => {
-                bars.forEach(bar => {
-                    // Lee el atributo data-width y lo aplica al estilo width
-                    const width = bar.getAttribute('data-width');
-                    bar.style.width = width;
-                });
-            }, 500);
-        });
-    </script>
 </body>
 </html>
