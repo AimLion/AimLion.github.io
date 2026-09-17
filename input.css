@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- ESTILOS CORE Y EFECTOS RETRO --- */
+body {
+    background-color: #1a1a1a; /* Gris muy oscuro, mejor que negro puro para lectura */
+    color: #f0f0f0;
+    font-family: 'Press Start 2P', cursive; /* Fuente global */
+    overflow-x: hidden; /* Evita scroll horizontal por efectos */
+}
+
+/* EFECTO SCANLINES (CRT)
+    Crea líneas horizontales semitransparentes sobre toda la pantalla
+    para imitar monitores de tubo.
+*/
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px; /* Grosor de la línea */
+    pointer-events: none; /* Permite hacer click a través de la capa */
+    z-index: 999; /* Siempre encima */
+}
+
+/* BORDES PIXELADOS (NES STYLE)
+    En lugar de bordes normales, usamos sombras sólidas para crear
+    esquinas cuadradas sin suavizado (aliasing), típico de pixel art.
+*/
+.pixel-border {
+    box-shadow: 
+        -4px 0 0 0 white, 
+        4px 0 0 0 white, 
+        0 -4px 0 0 white, 
+        0 4px 0 0 white;
+    margin: 4px; /* Espacio para que la sombra no se corte */
+}
+
+/* Variantes de color para los bordes */
+.pixel-border-red {
+    box-shadow: -4px 0 0 0 #ef4444, 4px 0 0 0 #ef4444, 0 -4px 0 0 #ef4444, 0 4px 0 0 #ef4444;
+}
+.pixel-border-blue {
+    box-shadow: -4px 0 0 0 #3b82f6, 4px 0 0 0 #3b82f6, 0 -4px 0 0 #3b82f6, 0 4px 0 0 #3b82f6;
+}
+
+/* Animación clásica de "Insert Coin" */
+.blink {
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* BARRAS DE VIDA (SKILLS)
+    Contenedor y relleno para simular la vida en juegos de pelea.
+*/
+.health-bar-container {
+    background-color: #374151;
+    border: 2px solid white; /* Borde simple interno */
+    height: 20px;
+    position: relative;
+}
+.health-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, #eab308, #ef4444); /* Gradiente Amarillo -> Rojo (Daño) */
+    width: 0%; /* Inicia vacío para la animación JS */
+    transition: width 1.5s ease-out; /* Animación suave al cargar */
+}
+
+/* Botones con interacción física simple */
+.btn-retro {
+    transition: transform 0.1s;
+    cursor: pointer;
+}
+.btn-retro:active {
+    transform: translateY(4px); /* Simula presionar botón físico */
+}
+.btn-retro:hover {
+    background-color: #fff; /* Inversión de color al hover */
+    color: #000;
+}
+
+/* Sombra de texto neón para títulos principales */
+.text-neon {
+    text-shadow: 3px 3px #ff00de; /* Sombra Magenta/Cyan retro */
+}
