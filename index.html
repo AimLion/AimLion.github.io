@@ -167,14 +167,13 @@
                     </div>
 
                     <!-- SPLIT SCREEN SIMULATION -->
-                    <div class="bg-black h-56 mb-6 flex border-4 border-gray-700 overflow-hidden relative">
-                        <!-- Gameplay -->
-                        <div class="w-1/2 h-full border-r-2 border-green-500 flex items-center justify-center bg-zinc-900 text-[10px] text-gray-500 text-center p-2">
-                            [INSERT GAMEPLAY VIDEO HERE]
-                        </div>
-                        <!-- Debugging/Inspector -->
-                        <div class="w-1/2 h-full border-l-2 border-green-500 flex items-center justify-center bg-gray-950 text-[10px] text-green-400 font-sans p-2">
-                            [INSERT GODOT INSPECTOR/DEBUG LOGS]
+                    <div class="bg-black h-56 mb-6 border-4 border-gray-700 overflow-hidden relative">
+                        <!-- GAMEPLAY SHOWCASE -->
+                        <div class="bg-black h-56 mb-6 border-4 border-gray-700 overflow-hidden relative">
+                            <video autoplay loop muted playsinline controls class="w-full h-full object-cover">
+                                <source src="./assets/combat-gameplay.mp4" type="video/mp4">
+                                Tu navegador no soporta la etiqueta de video.
+                            </video>
                         </div>
                     </div>
 
@@ -184,6 +183,10 @@
                     </div>
                     <p class="text-[12px] text-gray-300 leading-6 mb-6 font-sans border-l-4 border-red-900 pl-4">
                         <strong class="text-white">Premise:</strong> A tactical card game where the player and CPU compete by deploying units and managing power across the board to control territory.
+                    </p>
+
+                    <p class="text-[11px] text-gray-500 font-mono mb-1 mt-6">
+                        // Developed in Godot 4. Built with custom GDScript components for Drag & Drop UI handling and a state-machine driven CPU opponent.
                     </p>
                 </article>
 
